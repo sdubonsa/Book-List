@@ -54,8 +54,10 @@ myLibrary.forEach(function(book) {
     container.appendChild(card)
 
     const p = document.getElementsByTagName('p')
-    p.classList.add("w-3/4")
-    
+    console.log(p)
+    p.forEach(function(element) {
+        element.classList.add("w-3/4")
+    })
 })
 
 console.log(myLibrary)

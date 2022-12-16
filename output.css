@@ -559,24 +559,6 @@ video {
   width: 75%;
 }
 
-.w-1\/3 {
-  width: 33.333333%;
-}
-
-.w-auto {
-  width: auto;
-}
-
-.min-w-max {
-  min-width: -moz-max-content;
-  min-width: max-content;
-}
-
-.min-w-min {
-  min-width: -moz-min-content;
-  min-width: min-content;
-}
-
 .min-w-fit {
   min-width: -moz-fit-content;
   min-width: fit-content;
