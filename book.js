@@ -23,7 +23,61 @@ const toggleRead = (e) => {
         e.read = true
     }
 
+    updateDisplay()
     console.log(e.read)
+}
+
+const updateDisplay = () => {
+    // CLEAR CURRENT DISPLAY
+    const display = document.getElementById('card-container')
+    display.innerHTML = ''
+
+    myLibrary.forEach(function(book) {
+        // ACTUAL CARD
+        const card = document.createElement("div")
+    
+        // STYLING FOR CARD
+        card.classList.add("flex", "flex-col", "text-white", "bg-gray-700", "rounded-lg", "w-40", "h-40")
+    
+        // CARD ELEMENTS
+        const title = document.createElement('h1')
+        title.classList.add("card-title")
+    
+        const author = document.createElement('p')
+        author.classList.add("author")
+    
+        const pages = document.createElement('p')
+        pages.classList.add("pages")
+    
+        const isRead = document.createElement('button')
+        isRead.classList.add("read-btn")
+        isRead.onclick = function() {
+            toggleRead(book)
+        }
+    
+        // GIVE CARD ELEMENTS THINGS
+        title.innerHTML = book.title
+        author.innerHTML = book.author
+        pages.innerHTML = book.pages
+        if(book.read) {
+            isRead.innerHTML = 'Book has been read'
+            isRead.classList.add("bg-lime-800")
+        } else {
+            isRead.innerHTML = 'Book has not been read'
+            isRead.classList.add("bg-rose-800")
+        }
+    
+        // APPEND ELEMENTS
+        card.appendChild(title)
+        card.appendChild(author)
+        card.appendChild(pages)
+        card.appendChild(isRead)
+    
+        // ADD STUFF TO THE CARD-CONTAINER
+        const container = document.getElementById('card-container')
+        container.classList.add("h-screen", "flex", "flex-row", "gap-10", "m-10")
+        container.appendChild(card)
+    })
 }
 
 let theHobbit = new Book("The Hobbit", "J.R.R. Tolkien", 295, false)
@@ -35,46 +89,6 @@ addBookToLibrary(theHobbit2)
 addBookToLibrary(theHobbit3)
 addBookToLibrary(theHobbit4)
 
-
-myLibrary.forEach(function(book) {
-    // ACTUAL CARD
-    const card = document.createElement("div")
-
-    // STYLING FOR CARD
-    card.classList.add("flex", "flex-col", "text-white", "bg-gray-700", "rounded-lg", "w-40", "h-40")
-
-    // CARD ELEMENTS
-    const title = document.createElement('h1')
-    title.classList.add("card-title")
-
-    const author = document.createElement('p')
-    author.classList.add("author")
-
-    const pages = document.createElement('p')
-    pages.classList.add("pages")
-
-    const isRead = document.createElement('button')
-    isRead.classList.add("read-btn")
-    isRead.onclick = function() {
-        toggleRead(book)
-    }
-
-    // GIVE CARD ELEMENTS THINGS
-    title.innerHTML = book.title
-    author.innerHTML = book.author
-    pages.innerHTML = book.pages
-    isRead.innerHTML = book.read
-
-    // APPEND ELEMENTS
-    card.appendChild(title)
-    card.appendChild(author)
-    card.appendChild(pages)
-    card.appendChild(isRead)
-
-    // ADD STUFF TO THE CARD-CONTAINER
-    const container = document.getElementById('card-container')
-    container.classList.add("h-screen", "flex", "flex-row", "gap-10", "m-10")
-    container.appendChild(card)
-})
+updateDisplay()
 
 console.log(myLibrary)
