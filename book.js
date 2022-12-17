@@ -9,14 +9,18 @@ function Book (title, author, pages, read) {
     this.read = read
 }
 
-// FUNCTIONS
-function addBookToLibrary (book) {
-    myLibrary.push(book);
+// LIBRARY OBJECT
+let Library = {
+    storage: [],
+    addBookToLibrary(book) {
+        this.storage.push(book)
+    },
+    getStorage() {
+        return this.storage
+    }
 }
 
 const toggleRead = (e) => {
-    console.log(e.read)
-
     if (e.read === true) {
         e.read = false
     } else {
@@ -24,7 +28,6 @@ const toggleRead = (e) => {
     }
 
     updateDisplay()
-    console.log(e.read)
 }
 
 const updateDisplay = () => {
@@ -32,7 +35,7 @@ const updateDisplay = () => {
     const display = document.getElementById('card-container')
     display.innerHTML = ''
 
-    myLibrary.forEach(function(book) {
+    Library.getStorage().forEach(function(book) {
         // ACTUAL CARD
         const card = document.createElement("div")
     
@@ -60,10 +63,10 @@ const updateDisplay = () => {
         author.innerHTML = book.author
         pages.innerHTML = book.pages
         if(book.read) {
-            isRead.innerHTML = 'Book has been read'
+            isRead.innerHTML = 'Read'
             isRead.classList.add("bg-lime-800")
         } else {
-            isRead.innerHTML = 'Book has not been read'
+            isRead.innerHTML = 'Not Read'
             isRead.classList.add("bg-rose-800")
         }
     
@@ -80,15 +83,39 @@ const updateDisplay = () => {
     })
 }
 
+// ### FORM SECTION ###
+const doForm = (e) => {
+    var data = new FormData(document.getElementById("form"))
+
+    data.append("title", document.getElementById("title-input").value)
+    data.append("author", document.getElementById("author-input").value)
+    data.append("pages", document.getElementById("pages-input").value)
+    data.append("read", document.getElementById("read-input").value)
+
+    let newBook = new Book(data.get("title"), data.get("author"), data.get("pages"), true)
+
+    console.log(Library.getStorage())
+    Library.addBookToLibrary(newBook)
+    console.log(Library.getStorage())
+    
+    updateDisplay()
+}
+
+document.querySelector("#form").addEventListener("submit", function(e) {
+    e.preventDefault()
+    doForm()
+})
+
 let theHobbit = new Book("The Hobbit", "J.R.R. Tolkien", 295, false)
 let theHobbit2 = new Book("The Hobbit", "J.R.R. Tolkien", 295, true)
 let theHobbit3 = new Book("The Hobbit", "J.R.R. Tolkien", 295, true)
 let theHobbit4 = new Book("The Hobbit", "J.R.R. Tolkien", 295, true)
-addBookToLibrary(theHobbit)
-addBookToLibrary(theHobbit2)
-addBookToLibrary(theHobbit3)
-addBookToLibrary(theHobbit4)
+
+Library.addBookToLibrary(theHobbit)
+Library.addBookToLibrary(theHobbit2)
+Library.addBookToLibrary(theHobbit3)
+Library.addBookToLibrary(theHobbit4)
 
 updateDisplay()
 
-console.log(myLibrary)
+console.log(Library.getStorage())
