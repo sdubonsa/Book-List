@@ -10,20 +10,23 @@
     <title>Book Library</title>
 </head>
 
-<body class="h-screen bg-gray-900">
-    <button id="add-book text-white">+</button>
-    <div id="card-container"></div>
+<header>
 
-    <div id="add-book-form">
-        <form id="form">
-            <input type="text" id="title-input">
-            <input type="text" id="author-input">
-            <input type="number" id="pages-input">
+</header>
+
+<body class="h-screen bg-gray-900">
+    <button id="add-book" class="text-white">ADD</button>
+    <div id="add-book-form" class="hidden w-1/4 flex justify-center">
+        <form id="form" class="flex flex-col gap-2">
+            <input type="text" id="title-input" required>
+            <input type="text" id="author-input" required>
+            <input type="number" id="pages-input" required>
             <input type="text" id="read-input">
 
-            <input type="submit" value="Add Book">
+            <input type="submit" value="Add Book" class="text-white">
         </form>
     </div>
+    <div id="card-container"></div>
 </body>
 
 </html>

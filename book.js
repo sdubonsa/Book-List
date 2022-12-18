@@ -17,6 +17,13 @@ let Library = {
     },
     getStorage() {
         return this.storage
+    },
+    removeBook(book) {
+        console.log("reached")
+
+        this.storage = this.storage.filter(function(el) {
+            return el != book
+        })
     }
 }
 
@@ -57,6 +64,14 @@ const updateDisplay = () => {
         isRead.onclick = function() {
             toggleRead(book)
         }
+
+        const removeBtn = document.createElement('button')
+        removeBtn.classList.add("remove-btn")
+        removeBtn.onclick = function() {
+            Library.removeBook(book)
+            updateDisplay()
+        
+        }
     
         // GIVE CARD ELEMENTS THINGS
         title.innerHTML = book.title
@@ -69,12 +84,14 @@ const updateDisplay = () => {
             isRead.innerHTML = 'Not Read'
             isRead.classList.add("bg-rose-800")
         }
+        removeBtn.innerHTML = 'REMOVE'
     
         // APPEND ELEMENTS
         card.appendChild(title)
         card.appendChild(author)
         card.appendChild(pages)
         card.appendChild(isRead)
+        card.appendChild(removeBtn)
     
         // ADD STUFF TO THE CARD-CONTAINER
         const container = document.getElementById('card-container')
@@ -94,10 +111,9 @@ const doForm = (e) => {
 
     let newBook = new Book(data.get("title"), data.get("author"), data.get("pages"), true)
 
-    console.log(Library.getStorage())
     Library.addBookToLibrary(newBook)
-    console.log(Library.getStorage())
-    
+
+    addForm.classList.add('hidden')
     updateDisplay()
 }
 
@@ -106,10 +122,18 @@ document.querySelector("#form").addEventListener("submit", function(e) {
     doForm()
 })
 
-let theHobbit = new Book("The Hobbit", "J.R.R. Tolkien", 295, false)
-let theHobbit2 = new Book("The Hobbit", "J.R.R. Tolkien", 295, true)
-let theHobbit3 = new Book("The Hobbit", "J.R.R. Tolkien", 295, true)
-let theHobbit4 = new Book("The Hobbit", "J.R.R. Tolkien", 295, true)
+const addBtn = document.querySelector('#add-book')
+const addForm = document.querySelector('#add-book-form')
+
+addBtn.addEventListener('click', function() {
+    addForm.classList.remove('hidden')
+})
+
+// ### ADDING STUFF TO THE LIBRARY ###
+let theHobbit = new Book("The Hobbit", "J.R.R. Tolkien", 293, false)
+let theHobbit2 = new Book("The Hobbit", "J.R.R. Tolkien", 29, true)
+let theHobbit3 = new Book("The Hobbit", "J.R.R. Tolkien", 25, true)
+let theHobbit4 = new Book("The Hobbit", "J.R.R. Tolkien", 2195, true)
 
 Library.addBookToLibrary(theHobbit)
 Library.addBookToLibrary(theHobbit2)
@@ -117,5 +141,3 @@ Library.addBookToLibrary(theHobbit3)
 Library.addBookToLibrary(theHobbit4)
 
 updateDisplay()
-
-console.log(Library.getStorage())
